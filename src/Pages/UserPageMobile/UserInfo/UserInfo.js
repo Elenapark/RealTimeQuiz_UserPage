@@ -15,11 +15,6 @@ const UserInfo = () => {
   const location = useLocation();
   const { language, platform } = location.state;
 
-  //   console.log(language);
-  //   console.log(platform);
-  //   console.log(input);
-  //   console.log(nickName);
-
   // input state에 닉네임 input값 저장
   const onChangeHandler = (e) => {
     setInput(e.target.value);

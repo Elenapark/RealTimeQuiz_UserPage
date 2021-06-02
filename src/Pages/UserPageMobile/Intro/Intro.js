@@ -13,7 +13,6 @@ const Intro = () => {
   const { language, onClickHandler, goToQuiz } = this.props;
 
   const sLangType = navigator.language || navigator.userLanguage;
-  console.log(sLangType);
 
   return (
     <div className="introContainer">

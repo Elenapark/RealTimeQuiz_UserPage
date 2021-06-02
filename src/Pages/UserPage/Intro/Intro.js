@@ -60,6 +60,7 @@ const Intro = () => {
     });
 
     socket.close();
+    console.log("intro 연결종료");
   };
 
   return (
@@ -130,7 +131,11 @@ const Intro = () => {
         </div>
       </div>
       <div className={`btnContainer ${isActive ? "active" : ""}`}>
-        <button onClick={goToUserInfo} className="enterBtn">
+        <button
+          onClick={goToUserInfo}
+          className="enterBtn"
+          disabled={!isActive}
+        >
           입장하기
         </button>
       </div>

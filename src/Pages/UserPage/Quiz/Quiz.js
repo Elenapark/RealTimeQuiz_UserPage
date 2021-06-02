@@ -112,58 +112,53 @@ const Quiz = () => {
     };
   }, []);
 
+  // FETCH  GET 함수
+  const fetchGet = (API) => {
+    const Authorization = localStorage.getItem("Authorization");
+    fetch(API, {
+      headers: {
+        Authorization: Authorization,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setData(res);
+      });
+  };
+
+  // FETCH POST 함수
+  const fetchPost = (API, requestBody) => {
+    const Authorization = localStorage.getItem("Authorization");
+
+    fetch(API, {
+      method: "POST",
+      headers: {
+        Authorization: Authorization,
+      },
+      body: JSON.stringify(requestBody),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.result === "success") {
+          // 정답확인중 component를 보여주다가 success를 받으면 정답/오답화면을 보여줌
+
+          setIsSuccess(true);
+        }
+      });
+  };
+
   useEffect(() => {
     if (status === "보상확인") {
-      const Authorization = localStorage.getItem("Authorization");
-      fetch(`${API}/reward/${quizNumRef.current}`, {
-        headers: {
-          Authorization: Authorization,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          setData(res);
-        });
+      fetchGet(`${API}/reward/${quizNumRef.current}`);
     } else if (status === "퀴즈시작") {
-      const Authorization = localStorage.getItem("Authorization");
-      fetch(`${API}/quiz/${quizNumRef.current}`, {
-        headers: {
-          Authorization: Authorization,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          setData(res);
-        });
+      fetchGet(`${API}/quiz/${quizNumRef.current}`);
     } else if (status === "정답확인") {
-      const Authorization = localStorage.getItem("Authorization");
-      fetch(`${API}/quiz`, {
-        method: "POST",
-        headers: {
-          Authorization: Authorization,
-        },
-        body: JSON.stringify({
-          quiz_num: data.quiz_num,
-          answer: isCorrectAnswer,
-        }),
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          if (res.result === "success") {
-            // 정답확인중 component를 보여주다가 success를 받으면 정답/오답화면을 보여줌
-            console.log(res);
-            setIsSuccess(true);
-          }
-        });
+      fetchPost(`${API}/quiz`, {
+        quiz_num: data.quiz_num,
+        answer: isCorrectAnswer,
+      });
     } else if (status === "결과확인") {
-      const Authorization = localStorage.getItem("Authorization");
-      fetch(`${API}/result`, {
-        headers: {
-          Authorization: Authorization,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => setData(res));
+      fetchGet(`${API}/result`);
     }
   }, [status]);
 

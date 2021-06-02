@@ -31,8 +31,6 @@ const Container = () => {
     setLanguage(LANGUAGES[id]);
   };
 
-  console.log(language, platform);
-
   const goToQuiz = () => {
     if (language === "") {
       alert("Please choose your language before start.");
