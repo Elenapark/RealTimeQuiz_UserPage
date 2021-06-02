@@ -141,7 +141,7 @@ const Quiz = () => {
       .then((res) => {
         if (res.result === "success") {
           // 정답확인중 component를 보여주다가 success를 받으면 정답/오답화면을 보여줌
-
+          console.log(res);
           setIsSuccess(true);
         }
       });
